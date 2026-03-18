@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<title>Admin Panel</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-black text-white p-4">
+
+<h1 class="text-xl mb-4">📊 Admin Panel</h1>
+
+<button onclick="loadUsers()" class="bg-blue-500 p-2 mb-2">Users</button>
+<button onclick="loadTx()" class="bg-green-500 p-2 mb-2">Transactions</button>
+
+<div id="data"></div>
+
+<script>
+
+async function loadUsers(){
+  let res = await fetch("http://localhost:3000/admin/users")
+  let data = await res.json()
+
+  let html=""
+  data.forEach(u=>{
+    html+=`<div>${u.id} - ${u.email}</div>`
+  })
+
+  document.getElementById("data").innerHTML = html
+}
+
+async function loadTx(){
+  let res = await fetch("http://localhost:3000/admin/transactions")
+  let data = await res.json()
+
+  let html=""
+  data.forEach(t=>{
+    html+=`<div>${t.type} - ${t.amount}</div>`
+  })
+
+  document.getElementById("data").innerHTML = html
+}
+
+</script>
+
+</body>
+</html>
